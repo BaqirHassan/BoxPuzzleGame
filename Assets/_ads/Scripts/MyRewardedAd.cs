@@ -5,15 +5,22 @@ using UnityEngine;
 
 public class MyRewardedAd : MonoBehaviour
 {
-    [SerializeField] private AdsConfigurations configs;
+    [SerializeField] public AdsConfigurations configs;
 
+    private bool isAdLoading = false;
     private RewardedAd _rewardedAd;
 
     /// <summary>
     /// Loads the ad.
     /// </summary>
-    public void LoadAd()
+    public void LoadAd(bool forceLoad = false)
     {
+        if (isAdLoading && !forceLoad)
+        {
+            Debug.LogWarning("An App Open Ad is Loading. Not loading an other.");
+            return; 
+        }
+
         // Clean up the old ad before loading a new one.
         if (_rewardedAd != null)
         {
@@ -24,7 +31,7 @@ public class MyRewardedAd : MonoBehaviour
 
         // Create our request used to load the ad.
         var adRequest = new AdRequest();
-
+        isAdLoading = true;
         // Send the request to load the ad.
         RewardedAd.Load(configs.GetRewardedAdId(), adRequest, (RewardedAd ad, LoadAdError error) =>
         {
@@ -48,22 +55,22 @@ public class MyRewardedAd : MonoBehaviour
 
             // Register to ad events to extend functionality.
             RegisterEventHandlers(ad);
+            isAdLoading = false;
         });
     }
 
     /// <summary>
     /// Shows the ad.
     /// </summary>
-    public void ShowAd()
+    public void ShowAd(Action onRewardSuccessfull, Action onRewardCancle = null, Action onRewardSkipped = null)
     {
         if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
             Debug.Log("Showing rewarded ad.");
             _rewardedAd.Show((Reward reward) =>
             {
-                Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}",
-                                        reward.Amount,
-                                        reward.Type));
+                Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}", reward.Amount, reward.Type));
+                onRewardSuccessfull?.Invoke();
             });
         }
         else
@@ -125,12 +132,13 @@ public class MyRewardedAd : MonoBehaviour
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Rewarded ad full screen content closed.");
+            LoadAd();
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.LogError("Rewarded ad failed to open full screen content with error : "
-                + error);
+            Debug.LogError("Rewarded ad failed to open full screen content with error : " + error);
+            LoadAd();
         };
     }
 }

@@ -13,6 +13,7 @@ public class Score : MonoBehaviour
 {
     [SerializeField] private SquareTextureData squareTextureData;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scoreTextGameOver;
 
 
     private bool newBestScore = false;
@@ -89,5 +90,6 @@ public class Score : MonoBehaviour
     private void UpdateScoreText()
     {
         scoreText.text = currentScores.ToString();
+        scoreTextGameOver.text = currentScores.ToString();
     }
 }

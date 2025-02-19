@@ -5,15 +5,22 @@ using UnityEngine;
 
 public class MyInterstitialAd : MonoBehaviour
 {
-    [SerializeField] private AdsConfigurations configs;
-
+    [SerializeField] public AdsConfigurations configs;
+    
+    private bool isAdLoading = false;
     private InterstitialAd _interstitialAd;
 
     /// <summary>
     /// Loads the ad.
     /// </summary>
-    public void LoadAd()
+    public void LoadAd(bool forceLoad = false)
     {
+        if (isAdLoading && !forceLoad)
+        {
+            Debug.LogWarning("An App Open Ad is Loading. Not loading an other.");
+            return;
+        }
+
         // Clean up the old ad before loading a new one.
         if (_interstitialAd != null)
         {
@@ -25,6 +32,7 @@ public class MyInterstitialAd : MonoBehaviour
         // Create our request used to load the ad.
         var adRequest = new AdRequest();
 
+        isAdLoading = true;
         // Send the request to load the ad.
         InterstitialAd.Load(configs.GetInterstitialAdId(), adRequest, (InterstitialAd ad, LoadAdError error) =>
         {
@@ -48,6 +56,7 @@ public class MyInterstitialAd : MonoBehaviour
 
             // Register to ad events to extend functionality.
             RegisterEventHandlers(ad);
+            isAdLoading = false;
         });
     }
 

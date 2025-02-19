@@ -128,6 +128,8 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
         var moveDistance = new Vector2(SquareRect.rect.width * SquareRect.localScale.x,
               SquareRect.rect.height * SquareRect.localScale.y);
 
+        //Debug.LogError(moveDistance);
+
         int currentIndexInList = 0;
 
         // Set Position to from final Shape
@@ -139,9 +141,11 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
                 if (shapeData.board[row].column[column]) 
                 {
                     _currentShapes[currentIndexInList].SetActive(true);
-                    _currentShapes[currentIndexInList].GetComponent<RectTransform>().localPosition = 
-                        new Vector2(GetXPositionForShapeSquare(shapeData, column, moveDistance), 
+                        Vector2 newPosition = new Vector2(GetXPositionForShapeSquare(shapeData, column, moveDistance), 
                         GetYPositionForShapeSquare(shapeData, row, moveDistance));
+                    _currentShapes[currentIndexInList].GetComponent<RectTransform>().localPosition = newPosition;
+
+                    //Debug.LogError("Position = row = " + row + "  Colunm = " + column + "Position = " + newPosition, _currentShapes[currentIndexInList]);
 
                     currentIndexInList++;
                 }
@@ -235,17 +239,21 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
                         shiftOnX = MoveDistance.x / 2;
                     if(column == middleSquareIndex1)
                         shiftOnX = (MoveDistance.x / 2 ) * -1;
+
+                    //Debug.Log("Equal shiftOnX = " + shiftOnX);
                 }
 
                 if (column < middleSquareIndex1 && column < middleSquareIndex2)      //Move it on negative
                 {
                     shiftOnX = MoveDistance.x * -1;
                     shiftOnX *= multiplier;
+                    //Debug.Log("Less shiftOnX = " + shiftOnX);
                 }
                 else if(column > middleSquareIndex1 && column  > middleSquareIndex2)    // Move it to plus
                 {
                     shiftOnX = MoveDistance.x * 1;
                     shiftOnX *= multiplier;
+                    //Debug.Log("Right shiftOnX = " + shiftOnX);
                 }
             }
         }

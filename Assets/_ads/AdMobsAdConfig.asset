@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c71221556a30e445a5dbe29c38e85e2, type: 3}
   m_Name: AdMobsAdConfig
   m_EditorClassIdentifier: 
-  BannerAdId_GP: ca-app-pub-3940256099942544/6300978111
-  InterstitialAdId_GP: ca-app-pub-3940256099942544/1033173712
-  MrecAdId_GP: ca-app-pub-3940256099942544/6300978111
-  RewardedAdId_GP: ca-app-pub-3940256099942544/6300978111
-  BannerAdId_iOS: ca-app-pub-3940256099942544/2934735716
-  InterstitialAdId_iOS: ca-app-pub-3940256099942544/4411468910
-  MrecAdId_iOS: ca-app-pub-3940256099942544/6300978111
-  RewardedAdId_iOS: ca-app-pub-3940256099942544/6300978111
-  BannerAdPosition: 0
+  BannerAdId_GP: ca-app-pub-3672650983131241/5033765446
+  InterstitialAdId_GP: ca-app-pub-3672650983131241/4613628193
+  RewardedInterstitialAdId_GP: ca-app-pub-3672650983131241/1795893169
+  RewardedAdId_GP: ca-app-pub-3672650983131241/5543566482
+  AppOpenId_GP: ca-app-pub-3672650983131241/9327345939
+  MrecAdId_GP: 
+  BannerAdPosition_GP: 1
+  BannerAdId_iOS: 
+  InterstitialAdId_iOS: 
+  RewardedInterstitialAdId_iOS: 
+  RewardedAdId_iOS: 
+  AppOpenId_iOS: 
+  MrecAdId_iOS: 
+  BannerAdPosition_iOS: 1

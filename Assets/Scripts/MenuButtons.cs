@@ -11,7 +11,7 @@ public class MenuButtons : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        AdsManager.Instance.ShowBanner();
+        //MyAdsManager.Instance.ShowBanner();
         SceneManager.LoadScene(sceneName);
     }
 }
